@@ -1,0 +1,6 @@
+@MunchrBackend_HostAddress = http://localhost:5057
+
+GET {{MunchrBackend_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
