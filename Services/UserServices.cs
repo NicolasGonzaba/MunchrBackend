@@ -17,12 +17,12 @@ namespace MunchrBackend.Services;
     public class UserServices
     {
          private readonly DataContext _dataContext;
-        // private readonly IConfiguration _config;
+        private readonly IConfiguration _config;
 
-        public UserServices(DataContext dataContext)
+        public UserServices(DataContext dataContext, IConfiguration config)
         {
             _dataContext = dataContext;
-            // _config = config;
+            _config = config;
         }
 
 
@@ -66,32 +66,32 @@ namespace MunchrBackend.Services;
             };
         }
 
-        // public async Task<string> Login (UserDTO user)
-        // {
-        //     UserModel currentUser = await GetUserInfoByUsernameAsync(user.Username);
+        public async Task<string> Login (UserDTO user)
+        {
+            UserModel currentUser = await GetUserInfoByUsernameAsync(user.Username);
 
-        //     if(currentUser == null) return null;
+            if(currentUser == null) return null;
 
-        //     if(!VerifyPassword(user.Password, currentUser.Salt, currentUser.Hash)) return null;
+            if(!VerifyPassword(user.Password, currentUser.Salt, currentUser.Hash)) return null;
 
-        //     return GenerateJWT(new List<Claim>());
-        // }
+            return GenerateJWT(new List<Claim>());
+        }
 
-        // private string GenerateJWT(List<Claim> claims)
-        // {
-        //     var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["JWT:Key"]));
-        //     var SigningCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
+        private string GenerateJWT(List<Claim> claims)
+        {
+            var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["JWT:Key"]));
+            var SigningCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
 
-        //     var tokenOptions = new JwtSecurityToken(
-        //         issuer: "",
-        //         audience: "",
-        //         claims: claims,
-        //         expires: DateTime.Now.AddMinutes(30),
-        //         signingCredentials: SigningCredentials
-        //     );
+            var tokenOptions = new JwtSecurityToken(
+                issuer: "",
+                audience: "",
+                claims: claims,
+                expires: DateTime.Now.AddMinutes(30),
+                signingCredentials: SigningCredentials
+            );
 
-        //     return new JwtSecurityTokenHandler().WriteToken(tokenOptions);
-        // }
+            return new JwtSecurityTokenHandler().WriteToken(tokenOptions);
+        }
 
         private static bool VerifyPassword(string password, string salt, string hash)
         {

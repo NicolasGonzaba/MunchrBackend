@@ -27,15 +27,15 @@ public class UserController : ControllerBase
         return BadRequest(new { Success = false, Message = "User Creation failed Email is already in use." });
     }
 
-    // [HttpPost("Login")]
-    //     public async Task<IActionResult> Login(UserDTO user)
-    //     {
-    //         var success = await _userServices.Login(user);
+    [HttpPost("Login")]
+        public async Task<IActionResult> Login(UserDTO user)
+        {
+            var success = await _userServices.Login(user);
 
-    //         if(success != null) return Ok(new {Token = success});
+            if(success != null) return Ok(new {Token = success});
 
-    //         return Unauthorized(new {Message = "Login was unsuccesful"});
-    //     }
+            return Unauthorized(new {Message = "Login was unsuccesful"});
+        }
 
         [HttpGet("GetUserByUsername/{username}")]
         public async Task<IActionResult> GetUserByUsername(string username)
