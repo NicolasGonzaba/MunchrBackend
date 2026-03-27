@@ -35,6 +35,7 @@ namespace MunchrBackend.Services;
             user.Username = newUser.Username;
             user.Email= newUser.Email;
             user.Buissness= newUser.Buissness;
+            user.Password=newUser.Password;
             user.Hash = EncryptedPassword.Hash;
             user.Salt = EncryptedPassword.Salt;
 
@@ -66,7 +67,7 @@ namespace MunchrBackend.Services;
             };
         }
 
-        public async Task<string> Login (UserDTO user)
+        public async Task<string> Login (LogInDTO user)
         {
             UserModel currentUser = await GetUserInfoByUsernameAsync(user.Username);
 
