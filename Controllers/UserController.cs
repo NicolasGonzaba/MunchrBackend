@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using MunchrBackend.Models;
 using MunchrBackend.Models.DTOS;
 using MunchrBackend.Services;
 
@@ -45,6 +46,15 @@ public class UserController : ControllerBase
             if(user != null) return Ok(user);
 
             return BadRequest(new {Message = "No user Found"});
+        }
+        [HttpDelete("DeleteUser")]
+        public async Task<ActionResult> DeleteContact(UserModel user)
+        {
+            var success = await _userServices.DeleteAccount(user);
+
+            if(success) return Ok(new{success});
+
+            return BadRequest(new{success});
         }
 
 

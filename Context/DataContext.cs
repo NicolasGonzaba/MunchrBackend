@@ -11,6 +11,7 @@ namespace MunchrBackend.Context
     {
         public DbSet<UserModel> Users { get; set; }
         public DbSet<ReviewModel> Reviews { get; set; }
+        public DbSet<BusinessModel> Business { get; set; }
         public DataContext(DbContextOptions options) : base (options){}
     }
 }

@@ -25,7 +25,7 @@ namespace MunchrBackend.Controllers
 
             if(reviews != null) return Ok(reviews);
 
-            return NotFound(new {Message = "No reviews "});
+            return NotFound(new {Message = "No reviews found"});
         }
 
         [HttpGet("GetReviewByUser/{username}")]
@@ -35,7 +35,7 @@ namespace MunchrBackend.Controllers
 
             if(reviews != null) return Ok( new { reviews });
 
-            return NotFound(new {Message = "No reviews "});
+            return NotFound(new {Message = "No reviews found"});
         }
 
         [HttpPost("AddReview")]
@@ -79,7 +79,20 @@ namespace MunchrBackend.Controllers
 
             if(reviews != null) return Ok( new { reviews });
 
-            return BadRequest(new {Message = "No reviews "});
+            return BadRequest(new {Message = "No reviews found"});
         }
+
+        [HttpGet("GetReviewsByScore/{rating}")]
+        public async Task<ActionResult<IEnumerable<ReviewModel>>> GetReviewsByScore(int rating)
+        {
+            var reviews = await _reviewService.GetReviewsByScoreAsync(rating);
+            if (reviews == null)
+                return NotFound("No reviews found.");
+            return Ok(reviews);
+        }
+
+        
+
+        
     }
 }

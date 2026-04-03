@@ -120,4 +120,8 @@ namespace MunchrBackend.Services;
             user.Username = currentUser.Username;
             return user;
         }
+        public async Task<bool> DeleteAccount(UserModel userToDelete){
+            _dataContext.Users.Remove(userToDelete);
+            return await _dataContext.SaveChangesAsync() !=0;
+        }
     }

@@ -60,5 +60,8 @@ namespace MunchrBackend.Services
             .Where(review => review.Buissness == buissness)
             .ToListAsync();
         }
+
+        internal async Task<List<ReviewModel>> GetReviewsByScoreAsync(int rating)=> await _dataContext.Reviews.Where(review => review.Rating == rating).ToListAsync();
+        
     }
 }
