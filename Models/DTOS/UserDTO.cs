@@ -10,6 +10,8 @@ namespace MunchrBackend.Models.DTOS
         public string? Username { get; set; }
         public string? Password { get; set; }
         public string? Email { get; set; }
+        public string? ProfilePic { get; set; }
         public string? Buissness { get; set; }
+
     }
 }

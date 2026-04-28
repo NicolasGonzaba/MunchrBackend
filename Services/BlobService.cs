@@ -32,32 +32,6 @@ namespace MunchrBackend.Services
             return blobClient.Uri.ToString();
         }
 
-    //     public async Task<string> UploadFileAsync(Stream fileStream, string fileName)
-    //     {
-    //         Console.WriteLine($"Uploading file: {fileName}");
-
-    //         var containerClient = _blobServiceClient.GetBlobContainerClient(_containerName);
-
-    //         await containerClient.CreateIfNotExistsAsync();
-
-    //         var blobClient = containerClient.GetBlobClient(fileName);
-
-    //         try
-    //         {
-    //             fileStream.Position = 0;
-
-    //             await blobClient.UploadAsync(fileStream, overwrite: true);
-
-    //             Console.WriteLine("Upload SUCCESS");
-
-    //             return blobClient.Uri.ToString();
-    //         }
-    //         catch (Exception ex)
-    //         {
-    //             Console.WriteLine("UPLOAD FAILED: " + ex.Message);
-    //             throw;
-    //         }
-    //     }
 
     }
 

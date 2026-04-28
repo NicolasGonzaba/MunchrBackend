@@ -27,7 +27,7 @@ namespace MunchrBackend.Controllers
             var fileUrl = await _blobService.UploadFileAsync(stream, fileName); 
 
             Console.WriteLine($"File: {file?.FileName}");
-Console.WriteLine($"FileName param: {fileName}");
+            Console.WriteLine($"FileName param: {fileName}");
 						
             return Ok(new { FileUrl = fileUrl });
         }

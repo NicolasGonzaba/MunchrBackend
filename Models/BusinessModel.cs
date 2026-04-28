@@ -19,6 +19,8 @@ namespace MunchrBackend.Models
         public string? City { get; set; }
         public string? State { get; set; }
         public int ZipCode { get; set; }
+        public string? BuissnessImage { get; set; }
+        public string? MenuImage { get; set; }
         public ICollection<ReviewModel> BusinessReviews { get; set;} = [];
     }
 }
