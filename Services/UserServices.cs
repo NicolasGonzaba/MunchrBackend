@@ -42,8 +42,6 @@ public class UserServices
 
         await blobClient.UploadAsync(fileStream, overwrite: true);
 
-        var pfpImage = "https://munchrblobstorage.blob.core.windows.net/pfpstorage/" + fileName;
-
         return blobClient.Uri.ToString();
     }
 
