@@ -24,7 +24,7 @@ public class BusinessService
         _dataContext = dataContext;
         _config = config;
     }
-    
+
 
     public async Task<bool> CreateBusiness(BusinessModel newBusiness)
     {
@@ -141,6 +141,28 @@ public class BusinessService
 
 
         await _dataContext.Business.AddAsync(business);
+        return await _dataContext.SaveChangesAsync() != 0;
+    }
+
+    public async Task<bool> EditBusinessWithImageAsync(BusinessModel business)
+    {
+        var businessToEdit = await GetBusinessByIdAsync(business.BusinessId);
+
+        if (businessToEdit == null) return false;
+
+        businessToEdit.BusinessDescription = business.BusinessDescription;
+        businessToEdit.BusinessHours = business.BusinessHours;
+        businessToEdit.BusinessName = business.BusinessName;
+        businessToEdit.BusinessPhoneNumber = business.BusinessPhoneNumber;
+        businessToEdit.Category = business.Category;
+        businessToEdit.City = business.City;
+        businessToEdit.State = business.State;
+        businessToEdit.ZipCode = business.ZipCode;
+        businessToEdit.StreetName = business.StreetName;
+        businessToEdit.BusinessImage = business.BusinessImage;
+        businessToEdit.MenuImage = business.MenuImage;
+
+        _dataContext.Business.Update(businessToEdit);
         return await _dataContext.SaveChangesAsync() != 0;
     }
 }

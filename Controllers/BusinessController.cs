@@ -138,7 +138,7 @@ namespace MunchrBackend.Controllers
                 using var stream = businesfile.OpenReadStream();
                 businessUrl = await _businessServices.UploadFileAsync(stream, businesfile.FileName);
             }
-            
+
             string menuUrl = "";
             if (menufile != null)
             {
@@ -161,9 +161,58 @@ namespace MunchrBackend.Controllers
                 MenuImage = menuUrl
             };
 
-            var result = await _businessServices.CreateBusiness(newBusiness);
+            var result = await _businessServices.CreateBusinessWithImage(newBusiness);
             if (!result)
                 return BadRequest("Failed to create.");
+
+            return Ok(result);
+        }
+        [HttpPut("EditBusinessWithImage")]
+        public async Task<ActionResult<bool>> EditBusinessWithImage(
+[FromForm] IFormFile businesfile,
+[FromForm] IFormFile menufile,
+[FromForm] string businessName,
+[FromForm] string businessHours,
+[FromForm] string businessPhoneNumber,
+[FromForm] string businessDescription,
+[FromForm] string category,
+[FromForm] string streetName,
+[FromForm] string city,
+[FromForm] string state,
+[FromForm] int zipCode
+)
+        {
+            string businessUrl = "";
+            if (businesfile != null)
+            {
+                using var stream = businesfile.OpenReadStream();
+                businessUrl = await _businessServices.UploadFileAsync(stream, businesfile.FileName);
+            }
+
+            string menuUrl = "";
+            if (menufile != null)
+            {
+                using var stream = menufile.OpenReadStream();
+                menuUrl = await _businessServices.UploadFileAsync(stream, menufile.FileName);
+            }
+
+            BusinessModel business = new()
+            {
+                BusinessName = businessName,
+                BusinessHours = businessHours,
+                BusinessPhoneNumber = businessPhoneNumber,
+                BusinessDescription = businessDescription,
+                Category = category,
+                StreetName = streetName,
+                City = city,
+                State = state,
+                ZipCode = zipCode,
+                BusinessImage = businessUrl,
+                MenuImage = menuUrl
+            };
+            var result = await _businessServices.EditBusinessWithImageAsync(business);
+            if (!result)
+                return NotFound("Failed to update.");
 
             return Ok(result);
         }
