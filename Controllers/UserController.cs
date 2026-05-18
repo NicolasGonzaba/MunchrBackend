@@ -99,5 +99,32 @@ public class UserController : ControllerBase
         return BadRequest(new { Success = false });
     }
 
+    [HttpPost("UpdateUserWithImage")]
+    public async Task<IActionResult> UpdateUserWithImage([FromForm] IFormFile file, [FromForm] string username, [FromForm] string email,[FromForm] string password, [FromForm] string buissness, string existingUser)
+    {
+        string imageUrl = "";
+
+        if (file != null)
+        {
+            using var stream = file.OpenReadStream();
+            imageUrl = await _userServices.UploadFileAsync(stream, file.FileName);
+        }
+
+        UserDTO user = new()
+        {
+            Username = username,
+            Email = email,
+            Password = password,
+            Buissness = buissness,
+            ProfilePic = imageUrl
+        };
+
+        bool success = await _userServices.UpdateUserWithImage(user, user.Username);
+
+        if (success) return Ok(new { Success = true });
+
+        return BadRequest(new { Success = false });
+    }
+
 
 }

@@ -165,4 +165,16 @@ public class BusinessService
         _dataContext.Business.Update(businessToEdit);
         return await _dataContext.SaveChangesAsync() != 0;
     }
+    public async Task<bool> EditBusinessImages(int id, string businessImage, string menuImage)
+    {
+        var businessToEdit = await GetBusinessByIdAsync(id);
+
+        if (businessToEdit == null) return false;
+
+        businessToEdit.BusinessImage = businessImage;
+        businessToEdit.MenuImage = menuImage;
+
+        _dataContext.Business.Update(businessToEdit);
+        return await _dataContext.SaveChangesAsync() != 0;
+    }
 }

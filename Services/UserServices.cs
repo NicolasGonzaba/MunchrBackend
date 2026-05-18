@@ -149,4 +149,22 @@ public class UserServices
         _dataContext.Users.Remove(userToDelete);
         return await _dataContext.SaveChangesAsync() != 0;
     }
+
+    public async Task<bool> UpdateUserWithImage(UserDTO editUser, string existingUser)
+    {
+
+        UserModel user = await GetUserInfoByUsernameAsync(existingUser);
+        user.Username = editUser.Username;
+        user.Email = editUser.Email;
+        user.Buissness = editUser.Buissness;
+        user.Password = editUser.Password;
+
+        if (!string.IsNullOrEmpty(editUser.ProfilePic))
+        {
+            user.ProfilePic = editUser.ProfilePic;
+        }
+
+        await _dataContext.Users.AddAsync(user);
+        return await _dataContext.SaveChangesAsync() != 0;
+    }
 }

@@ -171,6 +171,7 @@ namespace MunchrBackend.Controllers
         public async Task<ActionResult<bool>> EditBusinessWithImage(
 [FromForm] IFormFile businesfile,
 [FromForm] IFormFile menufile,
+[FromForm] int businessId,
 [FromForm] string businessName,
 [FromForm] string businessHours,
 [FromForm] string businessPhoneNumber,
@@ -198,6 +199,7 @@ namespace MunchrBackend.Controllers
 
             BusinessModel business = new()
             {
+                BusinessId=businessId,
                 BusinessName = businessName,
                 BusinessHours = businessHours,
                 BusinessPhoneNumber = businessPhoneNumber,
@@ -211,6 +213,29 @@ namespace MunchrBackend.Controllers
                 MenuImage = menuUrl
             };
             var result = await _businessServices.EditBusinessWithImageAsync(business);
+            if (!result)
+                return NotFound("Failed to update.");
+
+            return Ok(result);
+        }
+        [HttpPut("EditBusinesImages")]
+        public async Task<ActionResult<bool>> EditBusinessImages([FromForm] IFormFile businesfile, [FromForm] IFormFile menufile, int businessId)
+        {
+            string businessUrl = "";
+            if (businesfile != null)
+            {
+                using var stream = businesfile.OpenReadStream();
+                businessUrl = await _businessServices.UploadFileAsync(stream, businesfile.FileName);
+            }
+
+            string menuUrl = "";
+            if (menufile != null)
+            {
+                using var stream = menufile.OpenReadStream();
+                menuUrl = await _businessServices.UploadFileAsync(stream, menufile.FileName);
+            }
+
+            var result = await _businessServices.EditBusinessImages(businessId,businessUrl, menuUrl);
             if (!result)
                 return NotFound("Failed to update.");
 
